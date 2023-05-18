@@ -17,9 +17,6 @@ const UserShema = new Schema ({
     class_title :{
         type : String
     },
-    category : {
-        type : String
-    },
     class_level :{
         type:String
     },
@@ -35,9 +32,13 @@ const UserShema = new Schema ({
     image : {
         type :String
     },
-    favorite_post_id:{
-
-    }
+    role: {
+        type:String
+    },
+    favorite_post_id:[{
+        type:Schema.Types.ObjectId,
+        ref:"Post"
+    }]
 })
 
 const User = model('User',UserShema);
