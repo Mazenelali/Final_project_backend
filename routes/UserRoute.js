@@ -7,7 +7,7 @@ const router = express.Router()
 router.post("/" ,image,UserController.postUser)
 router.get("/" , UserController.getUser)
 router.get("/:id" , UserController.getUserById)
-router.put("/:id" , image,  UserController.UpdateUser)
+router.patch("/:id" , image,  UserController.UpdateUser)
 router.delete("/:id" , UserController.DeleteUser)
 router.post("/addFavorite/:id" , UserController.insertFavoritePost)
 

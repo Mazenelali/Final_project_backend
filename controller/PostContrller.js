@@ -22,7 +22,7 @@ export function getPost (req, res){
 }
 
 export function getPostById (req, res){
-    const id = req.param.id
+    const id = req.params.id
 
     Post.find({_id:id}).populate("User_id")
     .then((response)=>{

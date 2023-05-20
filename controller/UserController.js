@@ -6,11 +6,11 @@ import Student from "../Model/Student.js";
 dotenv.config();
 
 export function postUser(req, res) {
-    const { first_name, last_name, email, password, class_title, class_level, languages, age, location, image, favorite_post_id } = req.body
+    const { first_name, last_name, email, password, class_title, class_level, languages, location, image, favorite_post_id , description , number_phone } = req.body
 
     const hashedPassword = bcrypt.hashSync(password, 10)
 
-    const model = new User({ first_name: first_name, last_name: last_name, email: email, password: hashedPassword, class_title: class_title, class_level: class_level, languages: languages, age: age, location: location, image: image, favorite_post_id: favorite_post_id ,role:"tutor" })
+    const model = new User({ first_name: first_name, last_name: last_name, email: email, password: hashedPassword, class_title: class_title, class_level: class_level, languages: languages, location: location, image: image, favorite_post_id: favorite_post_id ,role:"tutor" ,description:description , number_phone:number_phone})
     model.save()
         .then((response) => {
             return res.status(200).send({ response })
@@ -42,9 +42,14 @@ export function getUserById(req, res) {
 
 export function UpdateUser(req, res) {
     const id = req.params.id
-    const data = req.body
+    const {password, ...update} = req.body
+    if (password){
+        const hashedPassword = bcrypt.hashSync(password, 10)
+        update.password = hashedPassword
+    }
 
-    User.findByIdAndUpdate({ _id: id }, { $set: data })
+
+    User.findByIdAndUpdate( id , update,{new:true})
         .then((response) => {
             res.status(200).json(response)
         }).catch((err) => {
@@ -70,7 +75,7 @@ export  async function login(req, res) {
     if(!user){
         res.json({message :" user dosen't exist !"})
     }
-    const isPasswordValid = bcrypt.compareSync(password , user.password)
+    const isPasswordValid = bcrypt.compareSync(password , user.password || "")
     if(!isPasswordValid){
         res.json({message :" Email or password not correct !"})
     }
@@ -80,12 +85,12 @@ export  async function login(req, res) {
         if(!student){
             res.json({message :" user dosen't exist !"})
         }
-        const isPasswordValidstudent = bcrypt.compareSync(password , student.password)
+        const isPasswordValidstudent = bcrypt.compareSync(password , student.password || "")
         if(!isPasswordValidstudent){
             res.json({message :" Email or password not correct !"})
         }
-        const tokenStudent = jwt.sign({ id: student._id }, process.env.JWT_SECRET_KEY, { expiresIn: '30d' });
-        return res.status(200).json({ message: 'Successfuly login', student: student, tokenStudent });
+        const token = jwt.sign({ id: student._id }, process.env.JWT_SECRET_KEY, { expiresIn: '30d' });
+        return res.status(200).json({ message: 'Successfuly login', user: student, token });
     }
 }
 

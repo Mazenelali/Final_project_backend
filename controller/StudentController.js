@@ -41,9 +41,10 @@ export function getStudentById(req, res) {
 
 export function UpdateStudent(req, res) {
     const id = req.params.id
-    const data = req.body
+    const { first_name, last_name, email, password , favorite_post_id } = req.body
+    const hashedPassword = bcrypt.hashSync(password, 10)
 
-    Student.findByIdAndUpdate({ _id: id }, { $set: data })
+    Student.findByIdAndUpdate({ _id: id }, { $set: { first_name: first_name, last_name: last_name, email: email, password: hashedPassword , favorite_post_id: favorite_post_id   } })
         .then((response) => {
             res.status(200).json(response)
         }).catch((err) => {

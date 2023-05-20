@@ -23,13 +23,17 @@ const UserShema = new Schema ({
     languages : {
         type:String
     },
-    age :{
-        type :Number
-    },
     location : {
         type :String
     },
     image : {
+        type :String
+    },
+    number_phone : {
+        type : String
+    },
+        description : {
+        
         type :String
     },
     role: {
