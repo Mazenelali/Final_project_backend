@@ -51,7 +51,7 @@ export function UpdateUser(req, res) {
 
     User.findByIdAndUpdate( id , update,{new:true})
         .then((response) => {
-            res.status(200).json(response)
+            res.status(200).json({message: "Your profile updated successfully" , response})
         }).catch((err) => {
             res.status(400).json(err.message)
         })
@@ -60,7 +60,7 @@ export function DeleteUser(req, res) {
 
     User.findByIdAndDelete({ _id: req.params.id })
         .then((response) => {
-            res.status(200).json("deleted succs")
+            res.status(200).json("Your account deleted successfully")
         }).catch((err) => {
             res.status(400).json(err.message)
         })

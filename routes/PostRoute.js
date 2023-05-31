@@ -6,7 +6,7 @@ const router = express.Router()
 router.post("/" ,image , PostController.AddPost)
 router.get("/" , PostController.getPost)
 router.get("/:id" , PostController.getPostById)
-router.put("/:id" , image, PostController.UpdatePost)
+router.patch("/:id" , image, PostController.UpdatePost)
 router.delete("/:id" , PostController.DeletePost)
 
 export default router

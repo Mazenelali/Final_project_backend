@@ -6,7 +6,7 @@ export function AddPost (req ,res){
     const model = new Post(data)
     model.save()
     .then((response)=>{
-        return res.status(200).send({response})
+        return res.status(200).send({message :"Your post created successfully " , response})
     }).catch((err)=>{
         return res.status(400).json(err.message)
     })
@@ -38,7 +38,7 @@ export function UpdatePost (req, res){
 
     Post.findByIdAndUpdate({_id:id} ,{$set:data})
     .then((response)=>{
-        res.status(200).json(response)
+        res.status(200).json({message : " Your post Updated successfully " , response})
     }).catch((err)=>{
         res.status(400).json(err.message)
     })
@@ -48,7 +48,7 @@ export function DeletePost (req, res){
 
     Post.findByIdAndDelete({_id:req.params.id})
     .then((response)=>{
-        res.status(200).json(response)
+        res.status(200).json({message : " Your post deleted successfully" , response})
     }).catch((err)=>{
         res.status(400).json(err.message)
     })
