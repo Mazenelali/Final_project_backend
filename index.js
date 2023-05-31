@@ -28,6 +28,8 @@ app.use("/Student" , Student)
 app.use("/Admin" , Admin)
 
 
+
+
 app.listen(port,(req , res)=>{
     console.log(`server listen on port ${port}`)
 })
